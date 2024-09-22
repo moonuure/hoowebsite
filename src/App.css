@@ -1,38 +1,144 @@
-.App {
+/* Reset some basic elements for consistency */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Set the body font and background */
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f4f6f9;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+  background-color: #d5d5d5;
+  color: #fff;
+  padding: 10px 20px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+header a:hover {
+  color: #ffeb3b;
+}
+
+/* Card Styles */
+.MuiCard-root {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.MuiCard-root:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.MuiCardMedia-root {
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+.MuiCardContent-root {
+  padding: 15px;
+}
+
+.MuiTypography-h5 {
+  font-size: 18px;
+  font-weight: 600;
+  color: #3f51b5;
+}
+
+.MuiTypography-body2 {
+  color: #666;
+}
+
+/* Footer Styles */
+footer {
+  background-color: #3f51b5;
+  color: #fff;
   text-align: center;
+  padding: 15px 0;
+  margin-top: 30px;
+  position: relative;
+  bottom: 0;
+  width: 100%;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+footer p {
+  margin: 5px 0;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+footer a {
+  color: #ffeb3b;
+  text-decoration: none;
+  margin: 0 10px;
+  transition: color 0.3s ease;
+}
+
+footer a:hover {
+  color: #fff;
+}
+
+/* Grid Layout for Courses */
+.MuiGrid-root {
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .MuiGrid-item {
+    flex-basis: 100%;
+    max-width: 100%;
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+/* Button Styles */
+button.MuiButton-root {
+  background-color: hsl(231, 19%, 86%);
+  color: #fff;
+  margin: 5px;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
 }
 
-.App-link {
-  color: #61dafb;
+button.MuiButton-root:hover {
+  background-color: #ededed;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Additional Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #f0f0f0;
+}
+
+p {
+  margin-bottom: 15px;
+  color: #666;
 }
