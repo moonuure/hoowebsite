@@ -142,3 +142,63 @@ p {
   margin-bottom: 15px;
   color: #666;
 }
+
+/* Login and Registration Page Styles */
+/* Container for forms */
+.auth-container {
+  max-width: 400px; /* Limiting the width to a maximum of 400px */
+  margin: 100px auto;
+  padding: 30px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Form titles */
+.auth-container h4 {
+  color: #283593;
+  font-weight: bold;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* Text field styling */
+.MuiTextField-root {
+  margin-bottom: 20px;
+}
+
+/* Increase space between email and password fields */
+.auth-container .MuiTextField-root + .MuiTextField-root {
+  margin-top: 50px;
+}
+
+/* Submit button */
+.auth-container button.MuiButton-root {
+  margin-top: 50px;
+  background-color: #283593;
+  color: #fff;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.auth-container button.MuiButton-root:hover {
+  background-color: #1a237e;
+}
+
+/* Links in the form */
+.auth-container a {
+  color: #283593;
+  text-decoration: none;
+}
+
+.auth-container a:hover {
+  text-decoration: underline;
+}
+
+/* Centered text within forms */
+.auth-container .MuiBox-root {
+  text-align: center;
+  margin-top: 20px;
+}
