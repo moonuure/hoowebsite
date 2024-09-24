@@ -24,7 +24,7 @@ body {
 
 /* Header Styles */
 header {
-  background-color: #d5d5d5;
+  background-color: #c7253e;
   color: #fff;
   padding: 10px 20px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
@@ -77,7 +77,7 @@ header a:hover {
 
 /* Footer Styles */
 footer {
-  background-color: #3f51b5;
+  background-color: #c7253e;
   color: #fff;
   text-align: center;
   padding: 15px 0;
@@ -201,4 +201,29 @@ p {
 .auth-container .MuiBox-root {
   text-align: center;
   margin-top: 20px;
+}
+
+/*Dashboard Overview*/
+.Overview {
+  color: #1a237e;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  margin-bottom: 30px;
+}
+.dashparts {
+  color: #1a237e;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  margin-left: 30px;
+  margin-right: 30px;
+  padding: 20px;
+  background-color: #f4f6f9;
+  border-radius: 10px;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+  }
 }

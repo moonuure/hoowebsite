@@ -47,7 +47,7 @@ const Header = () => {
   return (
     <AppBar
       position="static"
-      sx={{ backgroundColor: "#283593", padding: "10px 20px" }}
+      sx={{ backgroundColor: "#C7253E", padding: "10px 20px" }}
     >
       <Toolbar>
         <Typography

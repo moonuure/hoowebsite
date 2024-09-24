@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <AppBar
       position="static"
-      sx={{ backgroundColor: "#283593", padding: "20px 0", marginTop: "40px" }}
+      sx={{ backgroundColor: "#C7253E", padding: "20px 0", marginTop: "40px" }}
     >
       <Toolbar sx={{ justifyContent: "center" }}>
         <Typography variant="body1" sx={{ color: "#fff", textAlign: "center" }}>
