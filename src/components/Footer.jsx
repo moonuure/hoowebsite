@@ -4,8 +4,14 @@ import { AppBar, Toolbar, Typography } from "@mui/material";
 const Footer = () => {
   return (
     <AppBar
-      position="static"
-      sx={{ backgroundColor: "#C7253E", padding: "20px 0", marginTop: "40px" }}
+      position="fixed" // Change to fixed to lock it to the bottom
+      sx={{
+        backgroundColor: "#1658AA",
+        top: "auto", // Ensure it's at the bottom
+        bottom: 0, // Attach to the bottom of the viewport
+        width: "100%", // Make sure it spans the full width
+        padding: "20px 0",
+      }}
     >
       <Toolbar sx={{ justifyContent: "center" }}>
         <Typography variant="body1" sx={{ color: "#fff", textAlign: "center" }}>

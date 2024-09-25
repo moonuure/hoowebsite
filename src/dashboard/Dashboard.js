@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
@@ -9,6 +9,7 @@ import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
 import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SecurityIcon from "@mui/icons-material/Security";
+import StatCard from "../dashboard/StatCard"; // Import the StatCard component
 
 const Dashboard = () => {
   return (
@@ -18,195 +19,112 @@ const Dashboard = () => {
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12} md={6} lg={4}>
-          <Paper
-            elevation={3}
-            style={{
-              padding: 20,
-              textAlign: "center",
-              backgroundColor: "#347928",
-            }}
-          >
-            <TrendingUpIcon style={{ fontSize: 40, color: "#f5f5f5" }} />
-            <Typography variant="h6" style={{ marginTop: 10 }}>
-              Sales
-            </Typography>
-            <Typography variant="h4" style={{ marginTop: 10 }}>
-              $34,000
-            </Typography>
-            <Typography color="textSecondary" style={{ color: "#FFFFFF" }}>
-              Compared to last year
-            </Typography>
-          </Paper>
+          <StatCard
+            icon={TrendingUpIcon}
+            title="Sales"
+            value="$34,000"
+            description="Compared to last year"
+            percentage={55}
+            bgColor="#ffffff"
+            iconBgColor="#347928"
+            iconColor="#f5f5f5"
+          />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <Paper
-            elevation={3}
-            style={{
-              padding: 20,
-              textAlign: "center",
-              backgroundColor: "#640D5F",
-            }}
-          >
-            <CampaignIcon style={{ fontSize: 40, color: "#ff9800" }} />
-            <Typography variant="h6" style={{ marginTop: 10 }}>
-              Campaigns
-            </Typography>
-            <Typography variant="h4" style={{ marginTop: 10 }}>
-              $3,265
-            </Typography>
-            <Typography color="textSecondary" style={{ color: "#FFFFFF" }}>
-              -34.69% from last year
-            </Typography>
-          </Paper>
+          <StatCard
+            icon={CampaignIcon}
+            title="Campaigns"
+            value="$3,265"
+            description="-34.69% from last year"
+            percentage={-34.69}
+            bgColor="#ffffff"
+            iconBgColor="#640D5F"
+            iconColor="#ff9800"
+          />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <Paper
-            elevation={3}
-            style={{
-              padding: 20,
-              textAlign: "center",
-              backgroundColor: "#FF6600",
-            }}
-          >
-            <LocalOfferIcon style={{ fontSize: 40, color: "#f5f5f5" }} />
-            <Typography variant="h6" style={{ marginTop: 10 }}>
-              Coupons
-            </Typography>
-            <Typography variant="h4" style={{ marginTop: 10 }}>
-              $2,654
-            </Typography>
-            <Typography color="textSecondary" style={{ color: "#FFFFFF" }}>
-              15.4% from last year
-            </Typography>
-          </Paper>
+          <StatCard
+            icon={LocalOfferIcon}
+            title="Coupons"
+            value="$2,654"
+            description="15.4% from last year"
+            percentage={15.4}
+            bgColor="#ffffff"
+            iconBgColor="#FF6600"
+            iconColor="#f5f5f5"
+          />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <Paper
-            elevation={3}
-            style={{
-              padding: 20,
-              textAlign: "center",
-              backgroundColor: "#B8001F",
-            }}
-          >
-            <PeopleIcon style={{ fontSize: 40, color: "#f5f5f5" }} />
-            <Typography variant="h6" style={{ marginTop: 10 }}>
-              User Growth
-            </Typography>
-            <Typography variant="h4" style={{ marginTop: 10 }}>
-              1,235
-            </Typography>
-            <Typography color="textSecondary" style={{ color: "#FFFFFF" }}>
-              New Users this month
-            </Typography>
-          </Paper>
+          <StatCard
+            icon={PeopleIcon}
+            title="User Growth"
+            value="1,235"
+            description="New Users this month"
+            percentage={10}
+            bgColor="#ffffff"
+            iconBgColor="#B8001F"
+            iconColor="#f5f5f5"
+          />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <Paper
-            elevation={3}
-            style={{
-              padding: 20,
-              textAlign: "center",
-              backgroundColor: "#16423C",
-            }}
-          >
-            <TaskAltIcon style={{ fontSize: 40, color: "#f5f5f5" }} />
-            <Typography variant="h6" style={{ marginTop: 10 }}>
-              Tasks Completed
-            </Typography>
-            <Typography variant="h4" style={{ marginTop: 10 }}>
-              152
-            </Typography>
-            <Typography color="textSecondary" style={{ color: "#FFFFFF" }}>
-              This week
-            </Typography>
-          </Paper>
+          <StatCard
+            icon={TaskAltIcon}
+            title="Tasks Completed"
+            value="152"
+            description="This week"
+            percentage={5}
+            bgColor="#ffffff"
+            iconBgColor="#16423C"
+            iconColor="#f5f5f5"
+          />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <Paper
-            elevation={3}
-            style={{
-              padding: 20,
-              textAlign: "center",
-              backgroundColor: "#295F98",
-            }}
-          >
-            <NotificationsActiveIcon
-              style={{ fontSize: 40, color: "#f5f5f5" }}
-            />
-            <Typography variant="h6" style={{ marginTop: 10 }}>
-              Notifications
-            </Typography>
-            <Typography variant="h4" style={{ marginTop: 10 }}>
-              24
-            </Typography>
-            <Typography color="textLigh" style={{ color: "#FFFFFF" }}>
-              New Notifications
-            </Typography>
-          </Paper>
+          <StatCard
+            icon={NotificationsActiveIcon}
+            title="Notifications"
+            value="24"
+            description="New Notifications"
+            percentage={5}
+            bgColor="#ffffff"
+            iconBgColor="#295F98"
+            iconColor="#f5f5f5"
+          />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <Paper
-            elevation={3}
-            style={{
-              padding: 20,
-              textAlign: "center",
-              backgroundColor: "#C7253E",
-            }}
-          >
-            <SupportAgentIcon style={{ fontSize: 40, color: "#f5f5f5" }} />
-            <Typography variant="h6" style={{ marginTop: 10 }}>
-              Support Tickets
-            </Typography>
-            <Typography variant="h4" style={{ marginTop: 10 }}>
-              8
-            </Typography>
-            <Typography color="textLigh" style={{ color: "#FFFFFF" }}>
-              Open Tickets
-            </Typography>
-          </Paper>
+          <StatCard
+            icon={SupportAgentIcon}
+            title="Support Tickets"
+            value="8"
+            description="Open Tickets"
+            percentage={2}
+            bgColor="#ffffff"
+            iconBgColor="#C7253E"
+            iconColor="#f5f5f5"
+          />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <Paper
-            elevation={3}
-            style={{
-              padding: 20,
-              textAlign: "center",
-              backgroundColor: "#00712D",
-            }}
-          >
-            <ShoppingCartIcon style={{ fontSize: 40, color: "#f5f5f5" }} />
-            <Typography variant="h6" style={{ marginTop: 10 }}>
-              Orders
-            </Typography>
-            <Typography variant="h4" style={{ marginTop: 10 }}>
-              12
-            </Typography>
-            <Typography color="textLigh" style={{ color: "#FFFFFF" }}>
-              Pending Orders
-            </Typography>
-          </Paper>
+          <StatCard
+            icon={ShoppingCartIcon}
+            title="Orders"
+            value="12"
+            description="Pending Orders"
+            percentage={10}
+            bgColor="#ffffff"
+            iconBgColor="#00712D"
+            iconColor="#f5f5f5"
+          />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
-          <Paper
-            elevation={3}
-            style={{
-              padding: 20,
-              textAlign: "center",
-              backgroundColor: "#3A1078",
-            }}
-          >
-            <SecurityIcon style={{ fontSize: 40, color: "#f5f5f5" }} />
-            <Typography variant="h6" style={{ marginTop: 10 }}>
-              System Health
-            </Typography>
-            <Typography variant="h4" style={{ marginTop: 10 }}>
-              Good
-            </Typography>
-            <Typography color="textLigh" style={{ color: "#FFFFFF" }}>
-              No issues detected
-            </Typography>
-          </Paper>
+          <StatCard
+            icon={SecurityIcon}
+            title="System Health"
+            value="Good"
+            description="No issues detected"
+            percentage={0}
+            bgColor="#ffffff"
+            iconBgColor="#3A1078"
+            iconColor="#f5f5f5"
+          />
         </Grid>
       </Grid>
     </Box>

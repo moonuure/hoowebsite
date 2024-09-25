@@ -1,13 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../Login Component/firebase"; // Ensure this path is correct
-import { collection, getDocs, addDoc } from "firebase/firestore";
 import {
-  List,
-  ListItem,
-  ListItemText,
-  Typography,
-  Button,
+  collection,
+  getDocs,
+  addDoc,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from "firebase/firestore";
+import {
   Box,
+  Button,
   Dialog,
   DialogActions,
   DialogContent,
@@ -16,14 +19,26 @@ import {
   TextField,
   Snackbar,
   Alert,
-  Card,
-  CardContent,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  IconButton,
 } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [open, setOpen] = useState(false);
+  const [editMode, setEditMode] = useState(false);
+  const [selectedUserId, setSelectedUserId] = useState(null);
   const [newUserEmail, setNewUserEmail] = useState("");
+  const [newPassword, setNewPassword] = useState("");
   const [newUserRole, setNewUserRole] = useState("");
   const [successMessage, setSuccessMessage] = useState(false);
 
@@ -41,7 +56,18 @@ const Users = () => {
     fetchUsers();
   }, []);
 
-  const handleClickOpen = () => {
+  const handleClickOpen = (user = null) => {
+    if (user) {
+      setEditMode(true);
+      setSelectedUserId(user.id);
+      setNewUserEmail(user.email);
+      setNewUserRole(user.role);
+    } else {
+      setEditMode(false);
+      setSelectedUserId(null);
+      setNewUserEmail("");
+      setNewUserRole("");
+    }
     setOpen(true);
   };
 
@@ -49,20 +75,44 @@ const Users = () => {
     setOpen(false);
   };
 
-  const handleCreateUser = async () => {
+  const handleCreateOrUpdateUser = async () => {
     try {
-      await addDoc(collection(db, "users"), {
-        email: newUserEmail,
-        role: newUserRole || "user", // Default role is 'user'
-      });
+      if (editMode) {
+        // Update the existing user
+        const userDoc = doc(db, "users", selectedUserId);
+        await updateDoc(userDoc, {
+          email: newUserEmail,
+          role: newUserRole || "user",
+        });
+      } else {
+        // Create a new user
+        await addDoc(collection(db, "users"), {
+          email: newUserEmail,
+          password: newPassword,
+          role: newUserRole || "user",
+        });
+      }
+
       setOpen(false);
       setNewUserEmail("");
+      setNewPassword("");
       setNewUserRole("");
-      setSuccessMessage(true); // Show success message
+      setSuccessMessage(true);
       fetchUsers(); // Automatically refresh the user list after success
     } catch (error) {
-      console.error("Error creating user: ", error);
-      alert("Failed to create user. Please try again.");
+      console.error("Error creating/updating user: ", error);
+      alert("Failed to save user. Please try again.");
+    }
+  };
+
+  const handleDeleteUser = async (userId) => {
+    try {
+      await deleteDoc(doc(db, "users", userId));
+      setSuccessMessage(true);
+      fetchUsers(); // Automatically refresh the user list after deletion
+    } catch (error) {
+      console.error("Error deleting user: ", error);
+      alert("Failed to delete user. Please try again.");
     }
   };
 
@@ -72,48 +122,76 @@ const Users = () => {
         Users
       </Typography>
 
-      <Box>
-        {users.map((user, index) => (
-          <Card
-            key={index}
-            variant="outlined"
-            style={{
-              marginBottom: "16px",
-              backgroundColor: "#FF4E88", // Background color
-              color: "#FFFFFF", // Foreground (text) color
-            }}
-          >
-            <CardContent>
-              <Typography variant="h6">{user.email}</Typography>
-              <Typography color="inherit">
-                Role: {user.role || "N/A"}
-              </Typography>
-            </CardContent>
-          </Card>
-        ))}
-      </Box>
+      {/* Table to display users */}
+      <TableContainer component={Paper}>
+        <Table aria-label="user table">
+          <TableHead style={{ backgroundColor: "#8A9CAE" }}>
+            <TableRow>
+              <TableCell style={{ color: "#ffffff" }}>Username</TableCell>
+              <TableCell style={{ color: "#ffffff" }}>Email</TableCell>
+              <TableCell style={{ color: "#ffffff" }}>Role</TableCell>
+              <TableCell style={{ color: "#ffffff" }}>Actions</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {users.map((user) => (
+              <TableRow key={user.id}>
+                <TableCell>{user.username}</TableCell>
+                <TableCell>{user.email}</TableCell>
+                <TableCell>{user.role || "N/A"}</TableCell>
+                <TableCell>
+                  <IconButton
+                    style={{
+                      backgroundColor: "#1976d2", // Blue background
+                      color: "#ffffff", // White icon color
+                      marginRight: "1px",
+                      borderRadius: "6%",
+                    }}
+                    onClick={() => handleClickOpen(user)}
+                  >
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton
+                    style={{
+                      backgroundColor: "#d32f2f", // Red background
+                      color: "#ffffff", // White icon color
+                      borderRadius: "6%",
+                    }}
+                    onClick={() => handleDeleteUser(user.id)}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
       <Button
         variant="contained"
         color="success"
         style={{
-          color: "#c7253e",
+          color: "#ffffff",
+          backgroundColor: "#1658AA",
           position: "fixed", // Keeps the button fixed at the top-right corner
           top: 20,
           right: 20,
           zIndex: 1000, // Ensure it stays on top of other elements
         }}
-        onClick={handleClickOpen}
+        onClick={() => handleClickOpen()}
       >
         Create New User
       </Button>
 
-      {/* Dialog for creating a new user */}
+      {/* Dialog for creating/editing a user */}
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create New User</DialogTitle>
+        <DialogTitle>{editMode ? "Edit User" : "Create New User"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            To create a new user, please enter their email and role here.
+            {editMode
+              ? "To edit the user, please update the email and role."
+              : "To create a new user, please enter their email, password, and role."}
           </DialogContentText>
           <TextField
             autoFocus
@@ -124,6 +202,16 @@ const Users = () => {
             value={newUserEmail}
             onChange={(e) => setNewUserEmail(e.target.value)}
           />
+          {!editMode && (
+            <TextField
+              margin="dense"
+              label="Password"
+              type="password"
+              fullWidth
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+          )}
           <TextField
             margin="dense"
             label="Role"
@@ -133,11 +221,19 @@ const Users = () => {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="secondary">
+          <Button
+            onClick={handleClose}
+            color="secondary"
+            style={{ backgroundColor: "#c7253e", color: "#ffffff" }}
+          >
             Cancel
           </Button>
-          <Button onClick={handleCreateUser} color="primary">
-            Create
+          <Button
+            onClick={handleCreateOrUpdateUser}
+            color="primary"
+            style={{ backgroundColor: "#099C00", color: "#ffffff" }}
+          >
+            {editMode ? "Update" : "Create"}
           </Button>
         </DialogActions>
       </Dialog>
@@ -154,7 +250,7 @@ const Users = () => {
           severity="success"
           sx={{ width: "100%" }}
         >
-          Successfully created!
+          Successfully {editMode ? "updated" : "created"}!
         </Alert>
       </Snackbar>
     </Box>

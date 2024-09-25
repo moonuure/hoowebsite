@@ -24,7 +24,7 @@ const Sidebar = () => {
     <div
       style={{
         width: 250,
-        backgroundColor: "#C7253E",
+        backgroundColor: "#1658AA",
         color: "#fff",
         height: "100vh",
         padding: "20px 0",
