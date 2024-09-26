@@ -118,7 +118,7 @@ const Users = () => {
 
   return (
     <Box p={3}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom style={{ color: "#8A9CAE" }}>
         Users
       </Typography>
 

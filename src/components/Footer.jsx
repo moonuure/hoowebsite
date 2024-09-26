@@ -10,7 +10,7 @@ const Footer = () => {
         top: "auto", // Ensure it's at the bottom
         bottom: 0, // Attach to the bottom of the viewport
         width: "100%", // Make sure it spans the full width
-        padding: "20px 0",
+        padding: "3",
       }}
     >
       <Toolbar sx={{ justifyContent: "center" }}>

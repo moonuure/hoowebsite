@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import Header from "./components/header"; // Ensure this path is correct
 import Footer from "./components/Footer"; // Ensure this path is correct
-import Sidebar from "./dashboard/Sidebar"; // Sidebar component
+import Sidebar from "./dashboard/Sidebar Component/Sidebar"; // Sidebar component
 import Dashboard from "./dashboard/Dashboard"; // Dashboard component
 import CourseList from "./components/CourseList"; // CourseList component
 import Courses from "./pages/Courses"; // Courses page component
@@ -17,6 +17,7 @@ import Login from "./Login Component/Login"; // Ensure this path is correct
 import Register from "./Login Component/Register"; // Ensure this path is correct
 import Users from "./dashboard/Users"; // Users component
 import CreateUser from "./dashboard/CreateUser"; // CreateUser component
+import UserProfile from "./ProfilePage/userProfile"; // Corrected UserProfile path
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Login Component/firebase"; // Ensure this path is correct
 
@@ -55,9 +56,11 @@ const App = () => {
               <Route path="/users" element={<Users />} /> {/* View Users */}
               <Route path="/create-user" element={<CreateUser />} />{" "}
               {/* Create User */}
+              <Route path="/userProfile" element={<UserProfile />} />{" "}
+              {/* User Profile */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
-            <Footer />
+            {/* <Footer /> */}
           </div>
         </div>
       ) : (

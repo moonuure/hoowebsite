@@ -41,6 +41,10 @@ header a {
 header a:hover {
   color: #ffeb3b;
 }
+/*Side bar part*/
+.drawer {
+  background-color: #1658aa;
+}
 
 /* Card Styles */
 .MuiCard-root {
@@ -73,33 +77,6 @@ header a:hover {
 
 .MuiTypography-body2 {
   color: #666;
-}
-
-/* Footer Styles */
-footer {
-  background-color: #c7253e;
-  color: #fff;
-  text-align: center;
-  padding: 15px 0;
-  margin-top: 30px;
-  position: relative;
-  bottom: 0;
-  width: 100%;
-}
-
-footer p {
-  margin: 5px 0;
-}
-
-footer a {
-  color: #ffeb3b;
-  text-decoration: none;
-  margin: 0 10px;
-  transition: color 0.3s ease;
-}
-
-footer a:hover {
-  color: #fff;
 }
 
 /* Grid Layout for Courses */
