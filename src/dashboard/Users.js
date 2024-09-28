@@ -127,6 +127,7 @@ const Users = () => {
         <Table aria-label="user table">
           <TableHead style={{ backgroundColor: "#8A9CAE" }}>
             <TableRow>
+              <TableCell style={{ color: "#ffffff" }}>#</TableCell>
               <TableCell style={{ color: "#ffffff" }}>Username</TableCell>
               <TableCell style={{ color: "#ffffff" }}>Email</TableCell>
               <TableCell style={{ color: "#ffffff" }}>Role</TableCell>
@@ -134,9 +135,10 @@ const Users = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {users.map((user) => (
+            {users.map((user, index) => (
               <TableRow key={user.id}>
-                <TableCell>{user.username}</TableCell>
+                <TableCell>{index + 1}</TableCell>
+                <TableCell>{user.username || user.name}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>{user.role || "N/A"}</TableCell>
                 <TableCell>

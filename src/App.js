@@ -18,6 +18,12 @@ import Register from "./Login Component/Register"; // Ensure this path is correc
 import Users from "./dashboard/Users"; // Users component
 import CreateUser from "./dashboard/CreateUser"; // CreateUser component
 import UserProfile from "./ProfilePage/userProfile"; // Corrected UserProfile path
+import RoleAccess from "./ProfilePage/roleAccess"; // Corrected UserProfile path
+import MenuItemForm from "./dashboard/Menu Management/Dynamic Menu/MenuItemForm";
+import Categorization from "./dashboard/Menu Management/Categorization/categoryManagement";
+import OrderPlacement from "./dashboard/Order Management/orderPlacement";
+import OrderTracking from "./dashboard/Order Management/orderTracking";
+import OrderHistory from "./dashboard/Order Management/orderHistory";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Login Component/firebase"; // Ensure this path is correct
 
@@ -57,6 +63,12 @@ const App = () => {
               <Route path="/create-user" element={<CreateUser />} />{" "}
               {/* Create User */}
               <Route path="/userProfile" element={<UserProfile />} />{" "}
+              <Route path="/roleAccess" element={<RoleAccess />} />{" "}
+              <Route path="/menuItemForm" element={<MenuItemForm />} />{" "}
+              <Route path="/categorization" element={<Categorization />} />{" "}
+              <Route path="/orderPlacement" element={<OrderPlacement />} />{" "}
+              <Route path="/orderTracking" element={<OrderTracking />} />{" "}
+              <Route path="/orderHistory" element={<OrderHistory />} />{" "}
               {/* User Profile */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

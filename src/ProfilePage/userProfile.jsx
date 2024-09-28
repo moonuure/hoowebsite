@@ -1,143 +1,202 @@
 import React, { useState } from "react";
 import {
   Container,
+  Grid,
   TextField,
   Button,
+  Avatar,
   Typography,
   Box,
-  Avatar,
+  Select,
+  MenuItem,
+  InputLabel,
+  FormControl,
+  IconButton,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { storage, db } from "../Login Component/firebase"; // Adjust the path to your Firebase config
-import { updateProfile } from "firebase/auth"; // Import the necessary Firebase functions
+import EditIcon from "@mui/icons-material/Edit";
+import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import { useAuth } from "../context/AuthContext"; // Assuming you have a useAuth hook
 
 const UserProfile = () => {
-  const { user } = useAuth(); // Assuming you have a user context with user data
-  const navigate = useNavigate();
-
-  const [name, setName] = useState(user?.displayName || "");
+  const { user } = useAuth(); // Assuming useAuth provides user data
+  const [editMode, setEditMode] = useState(false);
+  const [fullName, setFullName] = useState(user?.displayName || "");
+  const [nickName, setNickName] = useState("");
+  const [gender, setGender] = useState("");
+  const [language, setLanguage] = useState("");
+  const [country, setCountry] = useState("");
+  const [timeZone, setTimeZone] = useState("");
   const [email, setEmail] = useState(user?.email || "");
-  const [oldPassword, setOldPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [profilePic, setProfilePic] = useState(null);
+  const [profilePic, setProfilePic] = useState(
+    user?.photoURL || "/static/images/avatar/1.jpg"
+  );
+
+  const handleEditClick = () => {
+    setEditMode(true);
+  };
+
+  const handleSaveClick = () => {
+    setEditMode(false);
+    // Add your logic to save the profile details here
+  };
 
   const handleProfilePicChange = (event) => {
-    if (event.target.files[0]) {
-      setProfilePic(event.target.files[0]);
-    }
-  };
-
-  const handleUpdateProfile = async (event) => {
-    event.preventDefault();
-
-    // Here you would include the logic to update the profile information
-    // including uploading the profile picture to Firebase Storage,
-    // updating the user's password, etc.
-
-    alert("Profile updated!");
-  };
-
-  const handleGoBack = () => {
-    navigate(-1); // Go back to the previous page
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      setProfilePic(reader.result);
+    };
+    reader.readAsDataURL(file);
+    // Add logic to upload the new profile picture to the server or cloud storage
   };
 
   return (
-    <Container maxWidth="sm" style={{ marginTop: "50px" }}>
+    <Container maxWidth="md" sx={{ mt: 5 }}>
       <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        p={3}
-        borderRadius="8px"
-        boxShadow="0px 0px 10px rgba(0, 0, 0, 0.1)"
+        sx={{
+          bgcolor: "#fff",
+          p: 4,
+          borderRadius: 2,
+          boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+        }}
       >
-        <Avatar
-          src={user?.photoURL || "/static/images/avatar/1.jpg"}
-          sx={{ width: 80, height: 80, marginBottom: 2 }}
-        />
-        <form onSubmit={handleUpdateProfile} style={{ width: "100%" }}>
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <TextField
-              label="username"
-              variant="outlined"
-              fullWidth
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              sx={{ mr: 1 }}
-            />
-            <TextField
-              label="old password"
-              type="password"
-              variant="outlined"
-              fullWidth
-              value={oldPassword}
-              onChange={(e) => setOldPassword(e.target.value)}
-              sx={{ ml: 1 }}
-            />
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <Box display="flex" alignItems="center">
+            <label htmlFor="profile-pic-upload">
+              <input
+                accept="image/*"
+                id="profile-pic-upload"
+                type="file"
+                style={{ display: "none" }}
+                onChange={handleProfilePicChange}
+                disabled={!editMode}
+              />
+              <Avatar
+                src={profilePic}
+                sx={{
+                  width: 80,
+                  height: 80,
+                  mr: 2,
+                  cursor: editMode ? "pointer" : "default",
+                }}
+              />
+              {editMode && (
+                <IconButton component="span" sx={{ position: "absolute" }}>
+                  <PhotoCamera />
+                </IconButton>
+              )}
+            </label>
+            <Box>
+              <Typography variant="h6">{fullName || "User Name"}</Typography>
+              <Typography variant="body2" color="textSecondary">
+                {email || "useremail@example.com"}
+              </Typography>
+            </Box>
           </Box>
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <TextField
-              label="your email"
-              type="email"
-              variant="outlined"
-              fullWidth
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              sx={{ mr: 1 }}
-            />
-            <TextField
-              label="new password"
-              type="password"
-              variant="outlined"
-              fullWidth
-              value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
-              sx={{ ml: 1 }}
-            />
-          </Box>
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <TextField
-              label="update your pic"
-              type="file"
-              variant="outlined"
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-              onChange={handleProfilePicChange}
-              sx={{ mr: 1 }}
-            />
-            <TextField
-              label="confirm password"
-              type="password"
-              variant="outlined"
-              fullWidth
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              sx={{ ml: 1 }}
-            />
-          </Box>
-          <Box display="flex" justifyContent="space-between" mt={2}>
+          {editMode ? (
             <Button
-              type="submit"
               variant="contained"
               color="primary"
-              sx={{ flex: 1, mr: 1 }}
+              onClick={handleSaveClick}
             >
-              update profile
+              Save
             </Button>
+          ) : (
             <Button
               variant="contained"
-              color="secondary"
-              sx={{ flex: 1, ml: 1 }}
-              onClick={handleGoBack}
+              color="primary"
+              onClick={handleEditClick}
             >
-              go back
+              Edit
             </Button>
-          </Box>
-        </form>
+          )}
+        </Box>
+
+        <Grid container spacing={3} sx={{ mt: 3 }}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Full Name"
+              variant="outlined"
+              fullWidth
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              disabled={!editMode}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Nick Name"
+              variant="outlined"
+              fullWidth
+              value={nickName}
+              onChange={(e) => setNickName(e.target.value)}
+              disabled={!editMode}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth variant="outlined" disabled={!editMode}>
+              <InputLabel>Gender</InputLabel>
+              <Select
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+                label="Gender"
+              >
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="other">Other</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Country"
+              variant="outlined"
+              fullWidth
+              value={country}
+              onChange={(e) => setCountry(e.target.value)}
+              disabled={!editMode}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <FormControl fullWidth variant="outlined" disabled={!editMode}>
+              <InputLabel>Language</InputLabel>
+              <Select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                label="Language"
+              >
+                <MenuItem value="english">English</MenuItem>
+                <MenuItem value="french">French</MenuItem>
+                <MenuItem value="spanish">Spanish</MenuItem>
+              </Select>
+            </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              label="Time Zone"
+              variant="outlined"
+              fullWidth
+              value={timeZone}
+              onChange={(e) => setTimeZone(e.target.value)}
+              disabled={!editMode}
+            />
+          </Grid>
+        </Grid>
+
+        <Box sx={{ mt: 4 }}>
+          <Typography variant="h6" gutterBottom>
+            My Email Address
+          </Typography>
+          <Typography variant="body1">{email}</Typography>
+          <Typography variant="body2" color="textSecondary">
+            1 month ago
+          </Typography>
+          {editMode && (
+            <Button variant="outlined" sx={{ mt: 1 }}>
+              + Add Email Address
+            </Button>
+          )}
+        </Box>
       </Box>
     </Container>
   );

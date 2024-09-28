@@ -43,12 +43,7 @@ const UserManagementMenu = ({ open }) => {
             </ListItemIcon>
             <ListItemText primary="Email/Password Auth" />
           </ListItem>
-          <ListItem
-            button
-            component={Link}
-            to="/role-based-access"
-            sx={{ pl: 4 }}
-          >
+          <ListItem button component={Link} to="/roleAccess" sx={{ pl: 4 }}>
             <ListItemIcon>
               <LockIcon style={{ color: "#fff" }} />
             </ListItemIcon>
