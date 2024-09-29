@@ -24,6 +24,10 @@ import Categorization from "./dashboard/Menu Management/Categorization/categoryM
 import OrderPlacement from "./dashboard/Order Management/orderPlacement";
 import OrderTracking from "./dashboard/Order Management/orderTracking";
 import OrderHistory from "./dashboard/Order Management/orderHistory";
+import Reservation from "./dashboard/Reservation ms/MakeReservationForm";
+import CalendarIntegration from "./dashboard/Reservation ms/CalendarIntegration";
+import EditReservation from "./dashboard/Reservation ms/EditReservation";
+import CancelReservation from "./dashboard/Reservation ms/cancelReservation";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Login Component/firebase"; // Ensure this path is correct
 
@@ -69,6 +73,16 @@ const App = () => {
               <Route path="/orderPlacement" element={<OrderPlacement />} />{" "}
               <Route path="/orderTracking" element={<OrderTracking />} />{" "}
               <Route path="/orderHistory" element={<OrderHistory />} />{" "}
+              <Route path="/reservation" element={<Reservation />} />{" "}
+              <Route
+                path="/calendarIntegration"
+                element={<CalendarIntegration />}
+              />{" "}
+              <Route path="/editReservation" element={<EditReservation />} />{" "}
+              <Route
+                path="/cancelReservation"
+                element={<CancelReservation />}
+              />{" "}
               {/* User Profile */}
               <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>

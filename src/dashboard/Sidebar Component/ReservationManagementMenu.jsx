@@ -31,7 +31,7 @@ const ReservationManagementMenu = ({ open }) => {
       </ListItem>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button component={Link} to="/reservations" sx={{ pl: 4 }}>
+          <ListItem button component={Link} to="/reservation" sx={{ pl: 4 }}>
             <ListItemIcon>
               <EventSeatIcon style={{ color: "#fff" }} />
             </ListItemIcon>
@@ -40,13 +40,37 @@ const ReservationManagementMenu = ({ open }) => {
           <ListItem
             button
             component={Link}
-            to="/calendar-integration"
+            to="/calendarIntegration"
             sx={{ pl: 4 }}
           >
             <ListItemIcon>
               <EventSeatIcon style={{ color: "#fff" }} />
             </ListItemIcon>
             <ListItemText primary="Calendar Integration" />
+          </ListItem>
+
+          <ListItem
+            button
+            component={Link}
+            to="/editReservation"
+            sx={{ pl: 4 }}
+          >
+            <ListItemIcon>
+              <EventSeatIcon style={{ color: "#fff" }} />
+            </ListItemIcon>
+            <ListItemText primary="Edit Reservation" />
+          </ListItem>
+
+          <ListItem
+            button
+            component={Link}
+            to="/cancelReservation"
+            sx={{ pl: 4 }}
+          >
+            <ListItemIcon>
+              <EventSeatIcon style={{ color: "#fff" }} />
+            </ListItemIcon>
+            <ListItemText primary="Cancel Reservation" />
           </ListItem>
         </List>
       </Collapse>

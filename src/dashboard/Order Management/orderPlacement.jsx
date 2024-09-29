@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import { Add as AddIcon, Remove as RemoveIcon } from "@mui/icons-material";
 import { db } from "../../Login Component/firebase"; // Adjust path as needed
-import { collection, getDocs, addDoc, query, where } from "firebase/firestore";
+import { collection, getDocs, addDoc } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid"; // To generate a unique ID
 
 const OrderPlacement = () => {
@@ -34,7 +34,6 @@ const OrderPlacement = () => {
   const [availableUsers, setAvailableUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredOrders, setFilteredOrders] = useState([]);
 
   // Fetch menu items and users from Firestore
   useEffect(() => {
@@ -142,24 +141,6 @@ const OrderPlacement = () => {
     setSelectedUser("");
   };
 
-  const handleFilterByUser = async (userId) => {
-    if (!userId) {
-      setFilteredOrders([]);
-      return;
-    }
-
-    const q = query(
-      collection(db, "orders"),
-      where("preparedBy", "==", userId)
-    );
-    const ordersSnapshot = await getDocs(q);
-    const ordersList = ordersSnapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data(),
-    }));
-    setFilteredOrders(ordersList);
-  };
-
   const filteredMenuItems = menuItems.filter((item) =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -180,35 +161,42 @@ const OrderPlacement = () => {
       <Grid container spacing={2}>
         {filteredMenuItems.map((item) => (
           <Grid item xs={12} sm={6} md={3} key={item.id}>
-            <Card sx={{ minHeight: 240 }}>
+            <Card sx={{ minHeight: 240, backgroundColor: "#FFA500" }}>
               <CardContent>
-                <Typography variant="h6" noWrap>
-                  {item.name}
+                <Box
+                  sx={{
+                    backgroundColor: "#002F5D",
+                    color: "#fff",
+                    padding: "8px",
+                    borderRadius: "5px",
+                    marginBottom: "10px",
+                  }}
+                >
+                  <Typography variant="h6" noWrap>
+                    Order Name: {item.name}
+                  </Typography>
+                </Box>
+                <Typography variant="body2" sx={{ color: "#fff" }}>
+                  Item Desc: {item.description}
                 </Typography>
-                <Typography variant="body2" sx={{ height: 60 }}>
-                  {item.description}
+                <Typography variant="body1" sx={{ color: "#fff" }}>
+                  Item Price: ${item.price}
                 </Typography>
-                <Typography variant="body1">${item.price}</Typography>
-                {item.imageUrl && (
-                  <img
-                    src={item.imageUrl}
-                    alt={item.name}
-                    style={{
-                      width: "100%",
-                      height: "120px",
-                      objectFit: "cover",
-                    }}
-                  />
-                )}
                 <Button
                   variant="contained"
-                  color="primary"
+                  sx={{
+                    backgroundColor: "#002F5D",
+                    color: "#fff",
+                    width: "100%",
+                    marginTop: 2,
+                    "&:hover": {
+                      backgroundColor: "#001F40",
+                    },
+                  }}
                   onClick={() => handleAddToOrder(item)}
                   startIcon={<AddIcon />}
-                  sx={{ marginTop: 1 }}
-                  size="small"
                 >
-                  Add to Order
+                  Add Order
                 </Button>
               </CardContent>
             </Card>

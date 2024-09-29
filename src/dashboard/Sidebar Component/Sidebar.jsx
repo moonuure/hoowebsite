@@ -38,7 +38,7 @@ const Sidebar = () => {
     <Drawer
       variant="permanent"
       sx={{
-        backgroundColor: "#1658AA",
+        backgroundColor: "#f5f5f5",
         width: open ? 240 : 60,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
@@ -51,12 +51,12 @@ const Sidebar = () => {
     >
       <Box
         sx={{
-          backgroundColor: "#1658AA",
+          backgroundColor: "#001F40",
           color: "#f5f5f5",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "10px",
+          padding: "5px",
         }}
       >
         <IconButton onClick={toggleSidebar}>
@@ -71,7 +71,7 @@ const Sidebar = () => {
       </Box>
       <Divider />
 
-      <List sx={{ backgroundColor: "#1658AA", color: "#fff" }}>
+      <List sx={{ backgroundColor: "#001F40", color: "#fff" }}>
         <DashboardLink open={open} />
         {/* Conditionally render menus based on user role */}
         {["Admin", "Manager"].includes(userRole) && (
