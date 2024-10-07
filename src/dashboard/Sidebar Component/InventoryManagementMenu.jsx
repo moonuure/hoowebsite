@@ -31,7 +31,7 @@ const InventoryManagementMenu = ({ open }) => {
       </ListItem>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem button component={Link} to="/stock-tracking" sx={{ pl: 4 }}>
+          <ListItem button component={Link} to="/inventory" sx={{ pl: 4 }}>
             <ListItemIcon>
               <InventoryIcon style={{ color: "#fff" }} />
             </ListItemIcon>

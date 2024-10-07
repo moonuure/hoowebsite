@@ -20,10 +20,18 @@ import {
   InputLabel,
   Select,
   MenuItem,
+  Snackbar,
 } from "@mui/material";
 import { Add as AddIcon, Remove as RemoveIcon } from "@mui/icons-material";
 import { db } from "../../Login Component/firebase"; // Adjust path as needed
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  doc,
+  getDoc,
+} from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid"; // To generate a unique ID
 
 const OrderPlacement = () => {
@@ -34,6 +42,8 @@ const OrderPlacement = () => {
   const [availableUsers, setAvailableUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [error, setError] = useState(false); // Error state for Snackbar
+  const [success, setSuccess] = useState(false); // Success state for Snackbar
 
   // Fetch menu items and users from Firestore
   useEffect(() => {
@@ -117,14 +127,33 @@ const OrderPlacement = () => {
         preparedBy: selectedUser, // Assign the selected user to the order
         createdAt: new Date(),
       });
-      alert("Order placed successfully!");
+
+      // Deduct quantities from the inventory
+      for (const item of orderItems) {
+        const ingredientRef = doc(db, "inventory", item.ingredientId); // Assuming `ingredientId` maps to the inventory item
+        const ingredientSnap = await getDoc(ingredientRef);
+        if (ingredientSnap.exists()) {
+          const currentQuantity = ingredientSnap.data().quantity;
+          const updatedQuantity = currentQuantity - item.quantity; // Deduct based on the order quantity
+          if (updatedQuantity < 0) {
+            alert(`Not enough stock for ${item.name}`);
+          } else {
+            await updateDoc(ingredientRef, { quantity: updatedQuantity });
+          }
+        }
+      }
+
+      // Success case
+      setSuccess(true);
+      setError(false); // Make sure error state is cleared
       setOrderItems([]);
       setSpecialInstructions("");
       setSelectedUser("");
       handleClose();
     } catch (error) {
       console.error("Error placing order:", error);
-      alert("Failed to place order. Please try again.");
+      setError(true); // Trigger the error snackbar
+      setSuccess(false); // Ensure success state is cleared
     }
   };
 
@@ -139,6 +168,11 @@ const OrderPlacement = () => {
     setOrderItems([]);
     setSpecialInstructions("");
     setSelectedUser("");
+  };
+
+  const handleRetry = () => {
+    setError(false);
+    handleConfirmOrder(); // Retry placing the order
   };
 
   const filteredMenuItems = menuItems.filter((item) =>
@@ -292,6 +326,27 @@ const OrderPlacement = () => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {/* Snackbar for displaying errors */}
+      <Snackbar
+        open={error}
+        autoHideDuration={6000}
+        onClose={() => setError(false)}
+        message="Failed to place order. Please try again."
+        action={
+          <Button color="secondary" size="small" onClick={handleRetry}>
+            Retry
+          </Button>
+        }
+      />
+
+      {/* Snackbar for successful order placement */}
+      <Snackbar
+        open={success}
+        autoHideDuration={6000}
+        onClose={() => setSuccess(false)}
+        message="Order placed successfully!"
+      />
     </Box>
   );
 };

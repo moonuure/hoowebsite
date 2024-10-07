@@ -28,6 +28,7 @@ import Reservation from "./dashboard/Reservation ms/MakeReservationForm";
 import CalendarIntegration from "./dashboard/Reservation ms/CalendarIntegration";
 import EditReservation from "./dashboard/Reservation ms/EditReservation";
 import CancelReservation from "./dashboard/Reservation ms/cancelReservation";
+import InventoryManagement from "./dashboard/Inverntory Ms/inventory";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./Login Component/firebase"; // Ensure this path is correct
 
@@ -74,6 +75,7 @@ const App = () => {
               <Route path="/orderTracking" element={<OrderTracking />} />{" "}
               <Route path="/orderHistory" element={<OrderHistory />} />{" "}
               <Route path="/reservation" element={<Reservation />} />{" "}
+              <Route path="/inventory" element={<InventoryManagement />} />{" "}
               <Route
                 path="/calendarIntegration"
                 element={<CalendarIntegration />}

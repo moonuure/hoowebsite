@@ -1,5 +1,5 @@
-import React from "react";
-import { Box, Grid, Typography } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Box, Grid, Typography, Alert, AlertTitle } from "@mui/material";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 import CampaignIcon from "@mui/icons-material/Campaign";
 import LocalOfferIcon from "@mui/icons-material/LocalOffer";
@@ -10,13 +10,79 @@ import SupportAgentIcon from "@mui/icons-material/SupportAgent";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SecurityIcon from "@mui/icons-material/Security";
 import StatCard from "../dashboard/StatCard"; // Import the StatCard component
+import { db } from "../Login Component/firebase"; // Firebase config
+import { collection, query, where, onSnapshot } from "firebase/firestore"; // Firebase Firestore
 
 const Dashboard = () => {
+  const [lowStockItems, setLowStockItems] = useState([]);
+  const [outOfStockItems, setOutOfStockItems] = useState([]);
+
+  // Fetching low stock and out-of-stock items
+  useEffect(() => {
+    const inventoryRef = collection(db, "inventory"); // Assuming 'inventory' is the Firestore collection
+
+    // Query for low stock (items with quantity <= 5)
+    const lowStockQuery = query(inventoryRef, where("quantity", "<=", 5));
+
+    const unsubscribeLowStock = onSnapshot(lowStockQuery, (snapshot) => {
+      const lowStock = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setLowStockItems(lowStock);
+    });
+
+    // Query for out of stock (items with quantity = 0)
+    const outOfStockQuery = query(inventoryRef, where("quantity", "==", 0));
+
+    const unsubscribeOutOfStock = onSnapshot(outOfStockQuery, (snapshot) => {
+      const outOfStock = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setOutOfStockItems(outOfStock);
+    });
+
+    // Cleanup listeners on unmount
+    return () => {
+      unsubscribeLowStock();
+      unsubscribeOutOfStock();
+    };
+  }, []);
+
   return (
     <Box p={3} className="dashparts">
       <Typography variant="h4" gutterBottom className="Overview">
         Dashboard Overview
       </Typography>
+
+      {/* Low Stock and Out of Stock Alerts */}
+      {lowStockItems.length > 0 && (
+        <Alert severity="warning" sx={{ marginBottom: 2 }}>
+          <AlertTitle>Low Stock Alert</AlertTitle>
+          The following items have low stock levels:
+          <ul>
+            {lowStockItems.map((item) => (
+              <li key={item.id}>
+                {item.name} - {item.quantity} left
+              </li>
+            ))}
+          </ul>
+        </Alert>
+      )}
+
+      {outOfStockItems.length > 0 && (
+        <Alert severity="error" sx={{ marginBottom: 2 }}>
+          <AlertTitle>Out of Stock Alert</AlertTitle>
+          The following items are out of stock:
+          <ul>
+            {outOfStockItems.map((item) => (
+              <li key={item.id}>{item.name} - Out of Stock</li>
+            ))}
+          </ul>
+        </Alert>
+      )}
+
       <Grid container spacing={3}>
         <Grid item xs={12} md={6} lg={4}>
           <StatCard
