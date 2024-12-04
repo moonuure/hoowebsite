@@ -11,7 +11,6 @@ import {
   ExpandLess,
   ExpandMore,
   Person as PersonIcon,
-  Lock as LockIcon,
 } from "@mui/icons-material";
 
 const UserManagementMenu = ({ open }) => {
@@ -23,37 +22,46 @@ const UserManagementMenu = ({ open }) => {
 
   return (
     <>
-      <ListItem button onClick={handleExpandClick}>
+      <ListItem button onClick={handleExpandClick} sx={{ color: "#fff" }}>
         <ListItemIcon>
           <PersonIcon style={{ color: "#fff" }} />
         </ListItemIcon>
-        {open && <ListItemText primary="User Management" />}
+        {open && (
+          <ListItemText primary="User Management" sx={{ color: "#fff" }} />
+        )}
         {open && (expanded ? <ExpandLess /> : <ExpandMore />)}
       </ListItem>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <List component="div" disablePadding>
+        <List
+          component="div"
+          disablePadding
+          sx={{
+            pl: 3, // Increase padding for indentation
+            color: "#fff", // Set text color to white
+          }}
+        >
           <ListItem
             button
             component={Link}
             to="/email-password-auth"
-            sx={{ pl: 4 }}
+            sx={{ pl: 1 }}
           >
-            <ListItemIcon>
-              <LockIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Email/Password Auth" />
+            <ListItemText
+              primary="• Email/Password Auth"
+              sx={{ fontSize: "0.875rem", color: "#fff" }} // Set small font size and color
+            />
           </ListItem>
-          <ListItem button component={Link} to="/roleAccess" sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <LockIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Role-Based Access" />
+          <ListItem button component={Link} to="/roleAccess" sx={{ pl: 1 }}>
+            <ListItemText
+              primary="• Role-Based Access"
+              sx={{ fontSize: "0.875rem", color: "#fff" }} // Set small font size and color
+            />
           </ListItem>
-          <ListItem button component={Link} to="/userProfile" sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <PersonIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="User Profiles" />
+          <ListItem button component={Link} to="/userProfile" sx={{ pl: 1 }}>
+            <ListItemText
+              primary="• User Profiles"
+              sx={{ fontSize: "0.875rem", color: "#fff" }} // Set small font size and color
+            />
           </ListItem>
         </List>
       </Collapse>

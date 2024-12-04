@@ -6,6 +6,7 @@ import {
   IconButton,
   Box,
   ListItemText,
+  ListItem,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import DashboardLink from "../Sidebar Component/DashboardLink";
@@ -21,14 +22,13 @@ import NotificationsMenu from "../Sidebar Component/NotificationsMenu";
 import TableManagementMenu from "../Sidebar Component/TableManagementMenu";
 import EmployeeManagementMenu from "../Sidebar Component/EmployeeManagementMenu";
 import SecurityBackupMenu from "../Sidebar Component/SecurityBackupMenu";
-import BasicLinks from "../Sidebar Component/BasicLinks"; // For links like Users, Create User, etc.
+import BasicLinks from "../Sidebar Component/BasicLinks";
 
-// Assume you have a context for authentication that provides user roles
 import { AuthContext } from "../../context/AuthContext";
 
-const Sidebar = () => {
+const Sidebar = ({ fontSize = 12 }) => {
   const [open, setOpen] = useState(true);
-  const { userRole } = useContext(AuthContext); // Get the user's role from context
+  const { userRole } = useContext(AuthContext);
 
   const toggleSidebar = () => {
     setOpen(!open);
@@ -65,15 +65,28 @@ const Sidebar = () => {
         {open && (
           <ListItemText
             primary="Restaurant Manager"
-            sx={{ marginLeft: 2, color: "#fff" }}
+            sx={{
+              marginLeft: 2,
+              color: "#fff",
+              "& .MuiTypography-root": {
+                fontSize, // Apply custom font size to text
+              },
+            }}
           />
         )}
       </Box>
       <Divider />
 
-      <List sx={{ backgroundColor: "#001F40", color: "#fff" }}>
+      <List
+        sx={{
+          backgroundColor: "#001F40",
+          color: "#fff",
+          "& .MuiListItemText-primary, & .MuiListItemText-secondary": {
+            fontSize, // Apply custom font size to primary and secondary text
+          },
+        }}
+      >
         <DashboardLink open={open} />
-        {/* Conditionally render menus based on user role */}
         {["Admin", "Manager"].includes(userRole) && (
           <UserManagementMenu open={open} />
         )}

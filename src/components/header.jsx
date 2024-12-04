@@ -57,7 +57,7 @@ const Header = () => {
         >
           Skills
         </Typography>
-        <Button color="inherit" component={Link} to="/" sx={{ marginLeft: 2 }}>
+        {/* <Button color="inherit" component={Link} to="/" sx={{ marginLeft: 2 }}>
           Home
         </Button>
         <Button
@@ -83,7 +83,7 @@ const Header = () => {
           sx={{ marginLeft: 2 }}
         >
           Contact
-        </Button>
+        </Button> */}
         {user && (
           <>
             <StyledBadge
