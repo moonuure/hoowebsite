@@ -37,10 +37,8 @@ const CustomerManagementMenu = ({ open }) => {
             to="/customer-profiles"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <PeopleIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Customer Profiles" />
+            
+            <ListItemText primary="• Customer Profiles" />
           </ListItem>
           <ListItem
             button
@@ -48,10 +46,7 @@ const CustomerManagementMenu = ({ open }) => {
             to="/loyalty-programs"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <PeopleIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Loyalty Programs" />
+            <ListItemText primary="• Loyalty Programs" />
           </ListItem>
         </List>
       </Collapse>

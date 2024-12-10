@@ -32,10 +32,7 @@ const InventoryManagementMenu = ({ open }) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button component={Link} to="/inventory" sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <InventoryIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Stock Tracking" />
+            <ListItemText primary="• Stock Tracking" />
           </ListItem>
           <ListItem
             button
@@ -43,10 +40,7 @@ const InventoryManagementMenu = ({ open }) => {
             to="/automatic-deductions"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <InventoryIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Automatic Deductions" />
+            <ListItemText primary="• Automatic Deductions" />
           </ListItem>
         </List>
       </Collapse>

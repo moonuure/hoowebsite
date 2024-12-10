@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Grid,
@@ -15,39 +15,76 @@ import {
 } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
-import { useAuth } from "../context/AuthContext"; // Assuming you have a useAuth hook
+import { useAuth } from "../context/AuthContext"; // Ensure the useAuth hook is correctly implemented
+import { db, storage } from "../Login Component/firebase"; // Ensure Firebase is configured properly
+import { doc, updateDoc, onSnapshot } from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const UserProfile = () => {
   const { user } = useAuth(); // Assuming useAuth provides user data
   const [editMode, setEditMode] = useState(false);
-  const [fullName, setFullName] = useState(user?.displayName || "");
+  const [fullName, setFullName] = useState("");
   const [nickName, setNickName] = useState("");
   const [gender, setGender] = useState("");
   const [language, setLanguage] = useState("");
   const [country, setCountry] = useState("");
   const [timeZone, setTimeZone] = useState("");
-  const [email, setEmail] = useState(user?.email || "");
-  const [profilePic, setProfilePic] = useState(
-    user?.photoURL || "/static/images/avatar/1.jpg"
-  );
+  const [email, setEmail] = useState("");
+  const [profilePic, setProfilePic] = useState("/static/images/avatar/1.jpg");
 
-  const handleEditClick = () => {
-    setEditMode(true);
-  };
+  const userDocRef = doc(db, "users", user?.uid); // Firestore reference to user document
 
-  const handleSaveClick = () => {
+  // Real-time user data fetch
+  useEffect(() => {
+    const unsubscribe = onSnapshot(userDocRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        setFullName(data.fullName || "");
+        setNickName(data.nickName || "");
+        setGender(data.gender || "");
+        setLanguage(data.language || "");
+        setCountry(data.country || "");
+        setTimeZone(data.timeZone || "");
+        setEmail(data.email || user?.email || "");
+        setProfilePic(data.profilePic || "/static/images/avatar/1.jpg");
+      }
+    });
+
+    return unsubscribe; // Cleanup subscription on component unmount
+  }, [userDocRef]);
+
+  const handleEditClick = () => setEditMode(true);
+
+  const handleSaveClick = async () => {
     setEditMode(false);
-    // Add your logic to save the profile details here
+    try {
+      await updateDoc(userDocRef, {
+        fullName,
+        nickName,
+        gender,
+        language,
+        country,
+        timeZone,
+        email,
+      });
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
   };
 
-  const handleProfilePicChange = (event) => {
+  const handleProfilePicChange = async (event) => {
     const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      setProfilePic(reader.result);
-    };
-    reader.readAsDataURL(file);
-    // Add logic to upload the new profile picture to the server or cloud storage
+    if (file) {
+      const storageRef = ref(storage, `profilePics/${user.uid}`);
+      try {
+        await uploadBytes(storageRef, file);
+        const downloadURL = await getDownloadURL(storageRef);
+        await updateDoc(userDocRef, { profilePic: downloadURL });
+        setProfilePic(downloadURL); // Reflect the new picture immediately
+      } catch (error) {
+        console.error("Error uploading profile picture:", error);
+      }
+    }
   };
 
   return (
@@ -182,21 +219,6 @@ const UserProfile = () => {
             />
           </Grid>
         </Grid>
-
-        <Box sx={{ mt: 4 }}>
-          <Typography variant="h6" gutterBottom>
-            My Email Address
-          </Typography>
-          <Typography variant="body1">{email}</Typography>
-          <Typography variant="body2" color="textSecondary">
-            1 month ago
-          </Typography>
-          {editMode && (
-            <Button variant="outlined" sx={{ mt: 1 }}>
-              + Add Email Address
-            </Button>
-          )}
-        </Box>
       </Box>
     </Container>
   );

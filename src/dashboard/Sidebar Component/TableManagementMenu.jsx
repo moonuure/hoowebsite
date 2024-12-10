@@ -37,10 +37,7 @@ const TableManagementMenu = ({ open }) => {
             to="/real-time-table-status"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <TableChartIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Real-Time Table Status" />
+            <ListItemText primary="• Real-Time T-Status" />
           </ListItem>
           <ListItem
             button
@@ -48,10 +45,7 @@ const TableManagementMenu = ({ open }) => {
             to="/waitlist-management"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <TableChartIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Waitlist Management" />
+            <ListItemText primary="• Waitlist Management" />
           </ListItem>
         </List>
       </Collapse>

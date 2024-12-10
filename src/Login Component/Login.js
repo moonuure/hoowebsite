@@ -27,11 +27,39 @@ const Login = () => {
   };
 
   return (
-    <Container className="auth-container">
-      <Typography variant="h4" align="center">
+    <Container
+      className="auth-container"
+      maxWidth="sm" // Sets the maximum width for larger screens
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100vh", // Full height of the viewport
+        padding: 2,
+      }}
+    >
+      <Typography
+        variant="h4"
+        align="center"
+        sx={{
+          mb: 3, // Margin bottom
+          fontSize: { xs: "1.8rem", sm: "2.5rem" }, // Responsive font size
+        }}
+      >
         Login
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit}
+        sx={{
+          width: "100%",
+          maxWidth: "400px",
+          display: "flex",
+          flexDirection: "column",
+          gap: 2, // Space between form fields
+        }}
+      >
         <TextField
           label="Email"
           type="email"
@@ -50,13 +78,37 @@ const Login = () => {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <Button variant="contained" color="primary" type="submit" fullWidth>
+        <Button
+          variant="contained"
+          color="primary"
+          type="submit"
+          fullWidth
+          sx={{
+            py: 1.5, // Add padding for larger click area
+            fontSize: "1rem", // Responsive button text size
+          }}
+        >
           Login
         </Button>
-      </form>
-      <Box>
-        <Typography variant="body2">
-          Don't have an account? <a href="/register">Register here</a>
+      </Box>
+      <Box sx={{ mt: 2, textAlign: "center" }}>
+        <Typography
+          variant="body2"
+          sx={{
+            fontSize: { xs: "0.8rem", sm: "1rem" }, // Responsive text size
+          }}
+        >
+          Don't have an account?{" "}
+          <a
+            href="/register"
+            style={{
+              textDecoration: "none",
+              color: "#1976d2",
+              fontWeight: "bold",
+            }}
+          >
+            Register here
+          </a>
         </Typography>
       </Box>
     </Container>

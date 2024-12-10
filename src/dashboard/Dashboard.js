@@ -19,7 +19,6 @@ const Dashboard = () => {
   const [pendingOrders, setPendingOrders] = useState([]); // State to store pending orders
 
   // Fetching low stock, out-of-stock items, and pending orders
-  // Fetching low stock, out-of-stock items, and orders
   useEffect(() => {
     const inventoryRef = collection(db, "inventory"); // Firestore collection for inventory
     const ordersRef = collection(db, "orders"); // Firestore collection for orders
@@ -56,7 +55,6 @@ const Dashboard = () => {
           id: doc.id,
           ...doc.data(),
         }));
-        console.log("Pending orders fetched:", pending); // Log pending orders
         setPendingOrders(pending); // Update state with pending orders
       }
     );
@@ -70,15 +68,25 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <Box p={3} className="dashparts">
-      <Typography variant="h4" gutterBottom className="Overview">
+    <Box p={3} className="dashboard" sx={{ backgroundColor: "#f5f5f5" }}>
+      <Typography
+        variant="h4"
+        gutterBottom
+        sx={{
+          fontWeight: 600,
+          color: "#333",
+          marginBottom: "20px",
+          letterSpacing: "0.5px",
+          textAlign: { xs: "center", sm: "left" }, // Responsive text alignment
+        }}
+      >
         Dashboard Overview
       </Typography>
 
       {/* Low Stock and Out of Stock Alerts */}
       {lowStockItems.length > 0 && (
-        <Alert severity="warning" sx={{ marginBottom: 2 }}>
-          <AlertTitle>Low Stock Alert</AlertTitle>
+        <Alert severity="warning" sx={{ marginBottom: 3, borderRadius: "8px" }}>
+          <AlertTitle sx={{ fontWeight: 600 }}>Low Stock Alert</AlertTitle>
           The following items have low stock levels:
           <ul>
             {lowStockItems.map((item) => (
@@ -91,8 +99,8 @@ const Dashboard = () => {
       )}
 
       {outOfStockItems.length > 0 && (
-        <Alert severity="error" sx={{ marginBottom: 2 }}>
-          <AlertTitle>Out of Stock Alert</AlertTitle>
+        <Alert severity="error" sx={{ marginBottom: 3, borderRadius: "8px" }}>
+          <AlertTitle sx={{ fontWeight: 600 }}>Out of Stock Alert</AlertTitle>
           The following items are out of stock:
           <ul>
             {outOfStockItems.map((item) => (
@@ -103,7 +111,7 @@ const Dashboard = () => {
       )}
 
       <Grid container spacing={3}>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             icon={TrendingUpIcon}
             title="Order Tracking"
@@ -113,9 +121,10 @@ const Dashboard = () => {
             bgColor="#ffffff"
             iconBgColor="#347928"
             iconColor="#f5f5f5"
+            shadow
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             icon={CampaignIcon}
             title="Order History"
@@ -125,9 +134,10 @@ const Dashboard = () => {
             bgColor="#ffffff"
             iconBgColor="#640D5F"
             iconColor="#ff9800"
+            shadow
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             icon={ShoppingCartIcon}
             title="Pending Orders"
@@ -137,9 +147,10 @@ const Dashboard = () => {
             bgColor="#ffffff"
             iconBgColor="#00712D"
             iconColor="#f5f5f5"
+            shadow
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             icon={LocalOfferIcon}
             title="Coupons"
@@ -149,9 +160,10 @@ const Dashboard = () => {
             bgColor="#ffffff"
             iconBgColor="#FF6600"
             iconColor="#f5f5f5"
+            shadow
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             icon={PeopleIcon}
             title="User Growth"
@@ -161,9 +173,10 @@ const Dashboard = () => {
             bgColor="#ffffff"
             iconBgColor="#B8001F"
             iconColor="#f5f5f5"
+            shadow
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             icon={TaskAltIcon}
             title="Tasks Completed"
@@ -173,9 +186,10 @@ const Dashboard = () => {
             bgColor="#ffffff"
             iconBgColor="#16423C"
             iconColor="#f5f5f5"
+            shadow
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             icon={NotificationsActiveIcon}
             title="Notifications"
@@ -185,9 +199,10 @@ const Dashboard = () => {
             bgColor="#ffffff"
             iconBgColor="#295F98"
             iconColor="#f5f5f5"
+            shadow
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             icon={SupportAgentIcon}
             title="Support Tickets"
@@ -197,9 +212,10 @@ const Dashboard = () => {
             bgColor="#ffffff"
             iconBgColor="#C7253E"
             iconColor="#f5f5f5"
+            shadow
           />
         </Grid>
-        <Grid item xs={12} md={6} lg={4}>
+        <Grid item xs={12} sm={6} md={4} lg={3}>
           <StatCard
             icon={SecurityIcon}
             title="System Health"
@@ -209,6 +225,7 @@ const Dashboard = () => {
             bgColor="#ffffff"
             iconBgColor="#3A1078"
             iconColor="#f5f5f5"
+            shadow
           />
         </Grid>
       </Grid>

@@ -34,9 +34,13 @@ const Sidebar = ({ fontSize = 12 }) => {
     setOpen(!open);
   };
 
+  // Determine if the screen size requires a temporary drawer
+  const isMobile = window.innerWidth < 768;
+
   return (
     <Drawer
-      variant="permanent"
+      // Conditionally set the variant to "temporary" for mobile
+      variant={isMobile ? "temporary" : "permanent"}
       sx={{
         backgroundColor: "#f5f5f5",
         width: open ? 240 : 60,
@@ -47,6 +51,20 @@ const Sidebar = ({ fontSize = 12 }) => {
           overflowX: "hidden",
           transition: "width 0.3s",
         },
+        "@media (max-width: 768px)": {
+          // For mobile, use temporary drawer
+          width: 240,
+          flexShrink: 0,
+        },
+        "@media (max-width: 600px)": {
+          // For very small screens, keep the sidebar closed by default
+          width: open ? 240 : 0,
+        },
+      }}
+      open={open}
+      onClose={toggleSidebar}
+      ModalProps={{
+        keepMounted: true, // Ensure it stays mounted on mobile
       }}
     >
       <Box
@@ -76,7 +94,6 @@ const Sidebar = ({ fontSize = 12 }) => {
         )}
       </Box>
       <Divider />
-
       <List
         sx={{
           backgroundColor: "#001F40",
@@ -120,8 +137,12 @@ const Sidebar = ({ fontSize = 12 }) => {
         {["Admin", "Manager"].includes(userRole) && (
           <EmployeeManagementMenu open={open} />
         )}
-        {["Admin", "IT"].includes(userRole) &&
-          ((<SecurityBackupMenu open={open} />), (<BasicLinks open={open} />))}
+        {["Admin", "IT"].includes(userRole) && (
+          <>
+            <SecurityBackupMenu open={open} />
+            <BasicLinks open={open} />
+          </>
+        )}
       </List>
     </Drawer>
   );

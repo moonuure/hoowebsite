@@ -32,10 +32,7 @@ const BillingPaymentsMenu = ({ open }) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button component={Link} to="/orderSummaries" sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <ReceiptIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Order Summaries" />
+            <ListItemText primary="• Order Summaries" />
           </ListItem>
           <ListItem
             button
@@ -43,10 +40,7 @@ const BillingPaymentsMenu = ({ open }) => {
             to="/payment/:orderId"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <ReceiptIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Payment Processing" />
+            <ListItemText primary="• Payment Processing" />
           </ListItem>
         </List>
       </Collapse>

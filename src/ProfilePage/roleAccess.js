@@ -35,6 +35,8 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../Login Component/firebase"; // Adjust the path to your Firebase config
+import { useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 const RoleAccess = () => {
   const [users, setUsers] = useState([]);
@@ -114,16 +116,21 @@ const RoleAccess = () => {
     user.email.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Check if screen size is small
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+
   return (
-    <Container>
+    <Container maxWidth="lg">
       <Box
         marginTop={2}
         display="flex"
+        flexDirection={isSmallScreen ? "column" : "row"}
         justifyContent="space-between"
-        alignItems="center"
+        alignItems={isSmallScreen ? "flex-start" : "center"}
         mb={2}
       >
-        <Typography variant="h4" style={{ color: "#1658AA" }}>
+        <Typography variant="h4" style={{ color: "#1658AA", flex: 1 }}>
           Role Access Management
         </Typography>
         <TextField
@@ -131,13 +138,15 @@ const RoleAccess = () => {
           variant="outlined"
           value={searchTerm}
           onChange={handleSearchChange}
+          fullWidth={isSmallScreen}
           InputProps={{
             endAdornment: <SearchIcon />,
           }}
+          sx={{ maxWidth: isSmallScreen ? "100%" : "300px" }}
         />
       </Box>
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ overflowX: "auto" }}>
         <Table>
           <TableHead style={{ backgroundColor: "#8A9CAE" }}>
             <TableRow>

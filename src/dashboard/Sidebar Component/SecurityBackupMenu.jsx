@@ -37,10 +37,7 @@ const SecurityBackupMenu = ({ open }) => {
             to="/secure-data-storage"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <SecurityIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Secure Data Storage" />
+            <ListItemText primary="• Secure Data-Storage" />
           </ListItem>
           <ListItem
             button
@@ -48,10 +45,7 @@ const SecurityBackupMenu = ({ open }) => {
             to="/automated-backups"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <SecurityIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Automated Backups" />
+            <ListItemText primary="• Automated Backups" />
           </ListItem>
         </List>
       </Collapse>

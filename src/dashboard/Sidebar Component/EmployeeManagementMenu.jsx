@@ -37,10 +37,7 @@ const EmployeeManagementMenu = ({ open }) => {
             to="/shift-scheduling"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <PeopleIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Shift Scheduling" />
+            <ListItemText primary="• Shift Scheduling" />
           </ListItem>
           <ListItem
             button
@@ -48,10 +45,7 @@ const EmployeeManagementMenu = ({ open }) => {
             to="/attendance-tracking"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <PeopleIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Attendance Tracking" />
+            <ListItemText primary="• Attendance Tracking" />
           </ListItem>
         </List>
       </Collapse>

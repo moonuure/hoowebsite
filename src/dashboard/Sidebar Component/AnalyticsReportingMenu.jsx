@@ -32,10 +32,7 @@ const AnalyticsReportingMenu = ({ open }) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button component={Link} to="/sales-reports" sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <AssessmentIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Sales Reports" />
+            <ListItemText primary="• Sales Reports" />
           </ListItem>
           <ListItem
             button
@@ -43,10 +40,7 @@ const AnalyticsReportingMenu = ({ open }) => {
             to="/customer-insights"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <AssessmentIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Customer Insights" />
+            <ListItemText primary="• Customer Insights" />
           </ListItem>
         </List>
       </Collapse>
