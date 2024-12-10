@@ -6,7 +6,6 @@ import {
   IconButton,
   Box,
   ListItemText,
-  ListItem,
 } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import DashboardLink from "../Sidebar Component/DashboardLink";
@@ -39,45 +38,42 @@ const Sidebar = ({ fontSize = 12 }) => {
 
   return (
     <Drawer
-      // Conditionally set the variant to "temporary" for mobile
       variant={isMobile ? "temporary" : "permanent"}
       sx={{
-        backgroundColor: "#f5f5f5",
         width: open ? 240 : 60,
         flexShrink: 0,
         "& .MuiDrawer-paper": {
+          background: "linear-gradient(to bottom, #001F40, #003366)",
+          color: "#fff",
           width: open ? 240 : 60,
           boxSizing: "border-box",
           overflowX: "hidden",
           transition: "width 0.3s",
         },
         "@media (max-width: 768px)": {
-          // For mobile, use temporary drawer
           width: 240,
-          flexShrink: 0,
-        },
-        "@media (max-width: 600px)": {
-          // For very small screens, keep the sidebar closed by default
-          width: open ? 240 : 0,
         },
       }}
       open={open}
       onClose={toggleSidebar}
       ModalProps={{
-        keepMounted: true, // Ensure it stays mounted on mobile
+        keepMounted: true,
       }}
     >
       <Box
         sx={{
-          backgroundColor: "#001F40",
-          color: "#f5f5f5",
+          background: "linear-gradient(to bottom, #001F40, #003366)",
+          color: "#fff",
           display: "flex",
           alignItems: "center",
           justifyContent: "space-between",
-          padding: "5px",
+          padding: "10px",
         }}
       >
-        <IconButton onClick={toggleSidebar}>
+        <IconButton
+          onClick={toggleSidebar}
+          sx={{ color: "#fff", fontSize: "10px" }}
+        >
           {open ? <ExpandLess /> : <ExpandMore />}
         </IconButton>
         {open && (
@@ -85,62 +81,62 @@ const Sidebar = ({ fontSize = 12 }) => {
             primary="Restaurant Manager"
             sx={{
               marginLeft: 2,
-              color: "#fff",
               "& .MuiTypography-root": {
-                fontSize, // Apply custom font size to text
+                fontSize,
               },
             }}
           />
         )}
       </Box>
-      <Divider />
+      <Divider sx={{ backgroundColor: "#fff" }} />
       <List
         sx={{
-          backgroundColor: "#001F40",
+          backgroundColor: "transparent",
           color: "#fff",
           "& .MuiListItemText-primary, & .MuiListItemText-secondary": {
-            fontSize, // Apply custom font size to primary and secondary text
+            fontSize,
+            color: "#fff",
           },
         }}
       >
-        <DashboardLink open={open} />
+        <DashboardLink open={open} iconSize="small" />
         {["Admin", "Manager"].includes(userRole) && (
-          <UserManagementMenu open={open} />
+          <UserManagementMenu open={open} iconSize="small" />
         )}
         {["Admin", "Chef"].includes(userRole) && (
-          <MenuManagementMenu open={open} />
+          <MenuManagementMenu open={open} iconSize="small" />
         )}
         {["Admin", "Server", "Chef"].includes(userRole) && (
-          <OrderManagementMenu open={open} />
+          <OrderManagementMenu open={open} iconSize="small" />
         )}
         {["Admin", "Manager", "Server"].includes(userRole) && (
-          <ReservationManagementMenu open={open} />
+          <ReservationManagementMenu open={open} iconSize="small" />
         )}
         {["Admin", "Manager"].includes(userRole) && (
-          <InventoryManagementMenu open={open} />
+          <InventoryManagementMenu open={open} iconSize="small" />
         )}
         {["Admin", "Accountant"].includes(userRole) && (
-          <BillingPaymentsMenu open={open} />
+          <BillingPaymentsMenu open={open} iconSize="small" />
         )}
         {["Admin", "Manager"].includes(userRole) && (
-          <CustomerManagementMenu open={open} />
+          <CustomerManagementMenu open={open} iconSize="small" />
         )}
         {["Admin", "Manager", "Analyst"].includes(userRole) && (
-          <AnalyticsReportingMenu open={open} />
+          <AnalyticsReportingMenu open={open} iconSize="small" />
         )}
         {["Admin", "Manager"].includes(userRole) && (
-          <NotificationsMenu open={open} />
+          <NotificationsMenu open={open} iconSize="small" />
         )}
         {["Admin", "Server"].includes(userRole) && (
-          <TableManagementMenu open={open} />
+          <TableManagementMenu open={open} iconSize="small" />
         )}
         {["Admin", "Manager"].includes(userRole) && (
-          <EmployeeManagementMenu open={open} />
+          <EmployeeManagementMenu open={open} iconSize="small" />
         )}
         {["Admin", "IT"].includes(userRole) && (
           <>
-            <SecurityBackupMenu open={open} />
-            <BasicLinks open={open} />
+            <SecurityBackupMenu open={open} iconSize="small" />
+            <BasicLinks open={open} iconSize="small" />
           </>
         )}
       </List>
