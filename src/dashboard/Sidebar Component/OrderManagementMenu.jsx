@@ -32,22 +32,13 @@ const OrderManagementMenu = ({ open }) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button component={Link} to="/orderPlacement" sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <ShoppingCartIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Order Placement" />
+            <ListItemText primary="• Order Placement" />
           </ListItem>
           <ListItem button component={Link} to="/orderTracking" sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <ShoppingCartIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Order Tracking" />
+            <ListItemText primary="• Order Tracking" />
           </ListItem>
           <ListItem button component={Link} to="/orderHistory" sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <ShoppingCartIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Order History" />
+            <ListItemText primary="• Order History" />
           </ListItem>
         </List>
       </Collapse>

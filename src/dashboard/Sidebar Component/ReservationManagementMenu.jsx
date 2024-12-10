@@ -26,16 +26,13 @@ const ReservationManagementMenu = ({ open }) => {
         <ListItemIcon>
           <EventSeatIcon style={{ color: "#fff" }} />
         </ListItemIcon>
-        {open && <ListItemText primary="Reservation Management" />}
+        {open && <ListItemText primary="Res-Management" />}
         {open && (expanded ? <ExpandLess /> : <ExpandMore />)}
       </ListItem>
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button component={Link} to="/reservation" sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <EventSeatIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Reservations" />
+            <ListItemText primary="• Reservations" />
           </ListItem>
           <ListItem
             button
@@ -43,10 +40,7 @@ const ReservationManagementMenu = ({ open }) => {
             to="/calendarIntegration"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <EventSeatIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Calendar Integration" />
+            <ListItemText primary="• Cal-Integration" />
           </ListItem>
 
           <ListItem
@@ -55,10 +49,7 @@ const ReservationManagementMenu = ({ open }) => {
             to="/editReservation"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <EventSeatIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Edit Reservation" />
+            <ListItemText primary="• Edit-Reserv" />
           </ListItem>
 
           <ListItem
@@ -67,10 +58,7 @@ const ReservationManagementMenu = ({ open }) => {
             to="/cancelReservation"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <EventSeatIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Cancel Reservation" />
+            <ListItemText primary="• Cancel Reserv" />
           </ListItem>
         </List>
       </Collapse>

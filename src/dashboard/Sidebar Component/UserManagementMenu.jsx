@@ -40,12 +40,7 @@ const UserManagementMenu = ({ open }) => {
             color: "#fff", // Set text color to white
           }}
         >
-          <ListItem
-            button
-            component={Link}
-            to="/email-password-auth"
-            sx={{ pl: 1 }}
-          >
+          <ListItem button component={Link} to="/create-user" sx={{ pl: 1 }}>
             <ListItemText
               primary="• Email/Password Auth"
               sx={{ fontSize: "0.875rem", color: "#fff" }} // Set small font size and color

@@ -32,16 +32,10 @@ const MenuManagementMenu = ({ open }) => {
       <Collapse in={expanded} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button component={Link} to="/menuItemForm" sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <MenuBookIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Dynamic Menu" />
+            <ListItemText primary="• Dynamic Menu" />
           </ListItem>
           <ListItem button component={Link} to="/categorization" sx={{ pl: 4 }}>
-            <ListItemIcon>
-              <MenuBookIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Categorization" />
+            <ListItemText primary="• Categorization" />
           </ListItem>
         </List>
       </Collapse>

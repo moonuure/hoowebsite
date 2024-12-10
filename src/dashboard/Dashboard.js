@@ -11,19 +11,21 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import SecurityIcon from "@mui/icons-material/Security";
 import StatCard from "../dashboard/StatCard"; // Import the StatCard component
 import { db } from "../Login Component/firebase"; // Firebase config
-import { collection, query, where, onSnapshot } from "firebase/firestore"; // Firebase Firestore
+import { collection, query, where, onSnapshot } from "firebase/firestore"; // Import Firestore functions
 
 const Dashboard = () => {
   const [lowStockItems, setLowStockItems] = useState([]);
   const [outOfStockItems, setOutOfStockItems] = useState([]);
+  const [pendingOrders, setPendingOrders] = useState([]); // State to store pending orders
 
-  // Fetching low stock and out-of-stock items
+  // Fetching low stock, out-of-stock items, and pending orders
+  // Fetching low stock, out-of-stock items, and orders
   useEffect(() => {
-    const inventoryRef = collection(db, "inventory"); // Assuming 'inventory' is the Firestore collection
+    const inventoryRef = collection(db, "inventory"); // Firestore collection for inventory
+    const ordersRef = collection(db, "orders"); // Firestore collection for orders
 
     // Query for low stock (items with quantity <= 5)
     const lowStockQuery = query(inventoryRef, where("quantity", "<=", 5));
-
     const unsubscribeLowStock = onSnapshot(lowStockQuery, (snapshot) => {
       const lowStock = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -34,7 +36,6 @@ const Dashboard = () => {
 
     // Query for out of stock (items with quantity = 0)
     const outOfStockQuery = query(inventoryRef, where("quantity", "==", 0));
-
     const unsubscribeOutOfStock = onSnapshot(outOfStockQuery, (snapshot) => {
       const outOfStock = snapshot.docs.map((doc) => ({
         id: doc.id,
@@ -43,10 +44,28 @@ const Dashboard = () => {
       setOutOfStockItems(outOfStock);
     });
 
+    // Query for pending orders (status = "pending")
+    const pendingOrdersQuery = query(
+      ordersRef,
+      where("status", "==", "pending") // Filter by pending status
+    );
+    const unsubscribePendingOrders = onSnapshot(
+      pendingOrdersQuery,
+      (snapshot) => {
+        const pending = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        console.log("Pending orders fetched:", pending); // Log pending orders
+        setPendingOrders(pending); // Update state with pending orders
+      }
+    );
+
     // Cleanup listeners on unmount
     return () => {
       unsubscribeLowStock();
       unsubscribeOutOfStock();
+      unsubscribePendingOrders(); // Unsubscribe from pending orders query
     };
   }, []);
 
@@ -87,10 +106,10 @@ const Dashboard = () => {
         <Grid item xs={12} md={6} lg={4}>
           <StatCard
             icon={TrendingUpIcon}
-            title="Sales"
-            value="$34,000"
-            description="Compared to last year"
-            percentage={55}
+            title="Order Tracking"
+            value={pendingOrders.length}
+            description="Orders waiting to process"
+            percentage={pendingOrders.length > 0 ? 10 : 0}
             bgColor="#ffffff"
             iconBgColor="#347928"
             iconColor="#f5f5f5"
@@ -99,13 +118,25 @@ const Dashboard = () => {
         <Grid item xs={12} md={6} lg={4}>
           <StatCard
             icon={CampaignIcon}
-            title="Campaigns"
-            value="$3,265"
-            description="-34.69% from last year"
-            percentage={-34.69}
+            title="Order History"
+            value="1,235"
+            description="Processed orders this year"
+            percentage={15}
             bgColor="#ffffff"
             iconBgColor="#640D5F"
             iconColor="#ff9800"
+          />
+        </Grid>
+        <Grid item xs={12} md={6} lg={4}>
+          <StatCard
+            icon={ShoppingCartIcon}
+            title="Pending Orders"
+            value={pendingOrders.length}
+            description="Orders waiting for action"
+            percentage={pendingOrders.length > 0 ? 5 : 0}
+            bgColor="#ffffff"
+            iconBgColor="#00712D"
+            iconColor="#f5f5f5"
           />
         </Grid>
         <Grid item xs={12} md={6} lg={4}>
@@ -165,18 +196,6 @@ const Dashboard = () => {
             percentage={2}
             bgColor="#ffffff"
             iconBgColor="#C7253E"
-            iconColor="#f5f5f5"
-          />
-        </Grid>
-        <Grid item xs={12} md={6} lg={4}>
-          <StatCard
-            icon={ShoppingCartIcon}
-            title="Orders"
-            value="12"
-            description="Pending Orders"
-            percentage={10}
-            bgColor="#ffffff"
-            iconBgColor="#00712D"
             iconColor="#f5f5f5"
           />
         </Grid>

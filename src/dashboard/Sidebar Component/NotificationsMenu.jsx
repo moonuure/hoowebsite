@@ -37,10 +37,7 @@ const NotificationsMenu = ({ open }) => {
             to="/order-notifications"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <NotificationsIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Order Notifications" />
+            <ListItemText primary="• Or-Notification" />
           </ListItem>
           <ListItem
             button
@@ -48,10 +45,7 @@ const NotificationsMenu = ({ open }) => {
             to="/promotional-messages"
             sx={{ pl: 4 }}
           >
-            <ListItemIcon>
-              <NotificationsIcon style={{ color: "#fff" }} />
-            </ListItemIcon>
-            <ListItemText primary="Promotional Messages" />
+            <ListItemText primary="• Promotional Messages" />
           </ListItem>
         </List>
       </Collapse>
